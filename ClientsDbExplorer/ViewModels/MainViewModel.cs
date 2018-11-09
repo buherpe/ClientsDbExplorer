@@ -56,7 +56,7 @@ namespace ClientsDbExplorer.ViewModels
             set => this.RaiseAndSetIfChanged(ref _selectedCount, value);
         }
 
-        private string _editText = "Редактировать 0 клиента(ов)";
+        private string _editText = "Редактировать 0 клиентов";
 
         public string EditText
         {
@@ -64,7 +64,7 @@ namespace ClientsDbExplorer.ViewModels
             set => this.RaiseAndSetIfChanged(ref _editText, value);
         }
 
-        private string _deleteText = "Удалить 0 клиента(ов)";
+        private string _deleteText = "Удалить 0 клиентов";
 
         public string DeleteText
         {

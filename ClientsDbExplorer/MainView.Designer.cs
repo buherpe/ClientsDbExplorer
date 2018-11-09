@@ -89,7 +89,7 @@
             this.buttonEditClient.Name = "buttonEditClient";
             this.buttonEditClient.Size = new System.Drawing.Size(176, 23);
             this.buttonEditClient.TabIndex = 7;
-            this.buttonEditClient.Text = "Редактировать 0 клиента(ов)";
+            this.buttonEditClient.Text = "Редактировать 0 клиентов";
             this.buttonEditClient.UseVisualStyleBackColor = true;
             // 
             // buttonDeleteClient
@@ -98,7 +98,7 @@
             this.buttonDeleteClient.Name = "buttonDeleteClient";
             this.buttonDeleteClient.Size = new System.Drawing.Size(150, 23);
             this.buttonDeleteClient.TabIndex = 8;
-            this.buttonDeleteClient.Text = "Удалить 0 клиента(ов)";
+            this.buttonDeleteClient.Text = "Удалить 0 клиентов";
             this.buttonDeleteClient.UseVisualStyleBackColor = true;
             // 
             // MainView
