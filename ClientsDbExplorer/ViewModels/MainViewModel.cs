@@ -47,15 +47,7 @@ namespace ClientsDbExplorer.ViewModels
 
         public SourceCache<Client, int> Clients = new SourceCache<Client, int>(x => x.Id);
         public SourceCache<Client, int> SelectedClients = new SourceCache<Client, int>(x => x.Id);
-
-        private Client _selectedClient;
-
-        public Client SelectedClient
-        {
-            get => _selectedClient;
-            set => this.RaiseAndSetIfChanged(ref _selectedClient, value);
-        }
-
+        
         private int _selectedCount;
 
         public int SelectedCount
@@ -128,7 +120,6 @@ namespace ClientsDbExplorer.ViewModels
             SelectionChangedCommand = ReactiveCommand.Create<ListViewItemSelectionChangedEventArgs>(x =>
             {
                 var client = (Client) x.Item.Tag;
-                //SelectedClient = client;
                 if (x.IsSelected)
                     SelectedClients.AddOrUpdate(client);
                 else
@@ -139,23 +130,6 @@ namespace ClientsDbExplorer.ViewModels
                 EditText = $"Редактировать {decl}";
                 DeleteText = $"Удалить {decl}";
             });
-
-
-            //ReactiveCommand.Create(() =>
-            //{
-            //    //var client = new Client {Id = 3, Name = "2", Birthday = DateTime.Now, Phone = "2"};
-            //    //_db.GetTable<Client>().InsertOnSubmit(client);
-            //    //_db.SubmitChanges();
-            //    //Clients.AddOrUpdate(client);
-
-            //    foreach (var client in GetAllClients())
-            //    {
-            //        Clients.AddOrUpdate(client);
-            //    }
-            //}
-            //, this.WhenAny(vm => vm.EnteredText, s => !string.IsNullOrWhiteSpace(s.Value)));
-
-
         }
 
         private void AddOrUpdate(Client client)
@@ -170,7 +144,6 @@ namespace ClientsDbExplorer.ViewModels
             else
             {
                 clientDb = new Client { Name = client.Name, Birthday = client.Birthday, Phone = client.Phone};
-                // добавляем его в таблицу Users
                 _db.GetTable<Client>().InsertOnSubmit(clientDb);
             }
 
