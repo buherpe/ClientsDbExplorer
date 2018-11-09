@@ -68,6 +68,7 @@
             this.maskedTextBoxPhone.Name = "maskedTextBoxPhone";
             this.maskedTextBoxPhone.Size = new System.Drawing.Size(93, 20);
             this.maskedTextBoxPhone.TabIndex = 3;
+            this.maskedTextBoxPhone.TextMaskFormat = System.Windows.Forms.MaskFormat.ExcludePromptAndLiterals;
             // 
             // labelName
             // 
