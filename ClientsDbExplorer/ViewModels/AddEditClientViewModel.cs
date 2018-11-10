@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using ClientsDbExplorer.Models;
 using NLog;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace ClientsDbExplorer.ViewModels
 {
@@ -10,29 +11,9 @@ namespace ClientsDbExplorer.ViewModels
     {
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private string _name;
-
-        public string Name
-        {
-            get => _name;
-            set => this.RaiseAndSetIfChanged(ref _name, value);
-        }
-
-        private DateTime _birthday = DateTime.Now;
-
-        public DateTime Birthday
-        {
-            get => _birthday;
-            set => this.RaiseAndSetIfChanged(ref _birthday, value);
-        }
-
-        private string _phone;
-
-        public string Phone
-        {
-            get => _phone;
-            set => this.RaiseAndSetIfChanged(ref _phone, value);
-        }
+        [Reactive] public string Name { get; set; }
+        [Reactive] public DateTime Birthday { get; set; } = DateTime.Now;
+        [Reactive] public string Phone { get; set; }
 
         public Client Client { get; set; }
 
