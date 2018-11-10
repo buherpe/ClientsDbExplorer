@@ -65,7 +65,7 @@ namespace ClientsDbExplorer.ViewModels
                 }
             });
 
-            EditClientsCommand = ReactiveCommand.Create(() =>
+            EditClientsCommand = ReactiveCommand.Create<object>(obj =>
             {
                 foreach (var client in SelectedClients.Items)
                 {

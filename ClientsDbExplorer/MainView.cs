@@ -49,8 +49,7 @@ namespace ClientsDbExplorer
 
             listView1.Events().ItemSelectionChanged.InvokeCommand(VM, vm => vm.SelectionChangedCommand);
 
-            //listView1.Events().MouseDoubleClick.Subscribe(_logger.Debug);
-            //listView1.Events().Enter.Subscribe(_logger.Debug);
+            listView1.Events().MouseDoubleClick.InvokeCommand(VM, vm => vm.EditClientsCommand);
 
 
             var clientsService = VM.Clients.Connect()
