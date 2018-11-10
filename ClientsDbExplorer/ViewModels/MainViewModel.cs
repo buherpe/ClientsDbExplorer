@@ -103,19 +103,15 @@ namespace ClientsDbExplorer.ViewModels
             SelectCommand = ReactiveCommand.Create<object>(o =>
             {
                 IEnumerable<Client> clients;
+                clients = _db.GetTable<Client>()
+                    .Where(x => x.Name.Contains(SearchName))
+                    .OrderBy(x => x.Id);
+
                 if (IsLimited)
                 {
-                    clients = _db.GetTable<Client>()
-                        .Where(x => x.Name.Contains(SearchName))
+                    clients = clients
                         .Skip((int) (Limit * (Page - 1)))
-                        .Take((int) Limit)
-                        .OrderBy(x => x.Id);
-                }
-                else
-                {
-                    clients = _db.GetTable<Client>()
-                        .Where(x => x.Name.Contains(SearchName))
-                        .OrderBy(x => x.Id);
+                        .Take((int) Limit);
                 }
 
                 Clients.Clear();
@@ -144,7 +140,7 @@ namespace ClientsDbExplorer.ViewModels
             this.WhenAnyValue(x => x.IsLimited)
                 .Throttle(TimeSpan.FromMilliseconds(250))
                 .DistinctUntilChanged()
-                .Skip(1)
+                //.Skip(1)
                 .InvokeCommand(SelectCommand);
         }
 
