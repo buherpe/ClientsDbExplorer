@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using ClientsDbExplorer.Models;
 using ClientsDbExplorer.ViewModels;
 using DynamicData;
+using DynamicData.Binding;
 using NLog;
 using ReactiveUI;
 using ReactiveUI.Events;
@@ -33,16 +34,27 @@ namespace ClientsDbExplorer
 
             this.Bind(VM, vm => vm.EditText, v => v.buttonEditClient.Text);
             this.Bind(VM, vm => vm.DeleteText, v => v.buttonDeleteClient.Text);
+            this.Bind(VM, vm => vm.SearchName, v => v.textBoxSearch.Text);
+            this.Bind(VM, vm => vm.IsLimited, v => v.checkBoxLimit.Checked);
+
+            this.Bind(VM, vm => vm.Limit, v => v.numericUpDownLimit.Value);
+            this.Bind(VM, vm => vm.Page, v => v.numericUpDownPage.Value);
+
+            this.Bind(VM, vm => vm.IsLimited, v => v.numericUpDownLimit.Enabled);
+            this.Bind(VM, vm => vm.IsLimited, v => v.numericUpDownPage.Enabled);
+
             this.BindCommand(VM, vm => vm.AddClientsCommand, v => v.buttonAddClient);
             this.BindCommand(VM, vm => vm.EditClientsCommand, v => v.buttonEditClient);
             this.BindCommand(VM, vm => vm.DeleteClientsCommand, v => v.buttonDeleteClient);
-            //this.BindCommand(VM, vm => vm.SelectedCommand, v => v.listView1.Events().ItemSelectionChanged);
+
             listView1.Events().ItemSelectionChanged.InvokeCommand(VM, vm => vm.SelectionChangedCommand);
-            
+
             //listView1.Events().MouseDoubleClick.Subscribe(_logger.Debug);
             //listView1.Events().Enter.Subscribe(_logger.Debug);
 
+
             var clientsService = VM.Clients.Connect()
+                .ObserveOn(listView1)
                 .Bind(out ClientData)
                 .DisposeMany()
                 .Subscribe();
@@ -50,7 +62,7 @@ namespace ClientsDbExplorer
             ClientData.ActOnEveryObject(AddClient, DeleteClient);
 
 
-            VM.GetAllClientTask();
+            //VM.GetAllClientTask();
         }
 
         private void AddClient(Client client)

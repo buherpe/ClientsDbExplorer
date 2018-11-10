@@ -13,68 +13,37 @@ using ClientsDbExplorer.Models;
 using DynamicData;
 using NLog;
 using ReactiveUI;
+using ReactiveUI.Fody.Helpers;
 
 namespace ClientsDbExplorer.ViewModels
 {
     public class MainViewModel : ReactiveObject
     {
-        //private string _modelString = "";
-        //public string EnteredText
-        //{
-        //    get => _modelString;
-        //    set => this.RaiseAndSetIfChanged(ref _modelString, value);
-        //}
-
-        //private string _statusString = "";
-        //public string Status
-        //{
-        //    get => _statusString;
-        //    set => this.RaiseAndSetIfChanged(ref _statusString, value);
-        //}
-
         private static Logger _logger = LogManager.GetCurrentClassLogger();
 
-        private string _connectionString =
+        [Reactive]
+        public string ConnectionString { get; set; } =
             @"Data Source=""(local)"";Initial Catalog=clientsdb;Integrated Security=True";
-
-        public string ConnectionString
-        {
-            get => _connectionString;
-            set => this.RaiseAndSetIfChanged(ref _connectionString, value);
-        }
 
         private DataContext _db;
 
         public SourceCache<Client, int> Clients = new SourceCache<Client, int>(x => x.Id);
         public SourceCache<Client, int> SelectedClients = new SourceCache<Client, int>(x => x.Id);
-        
-        private int _selectedCount;
 
-        public int SelectedCount
-        {
-            get => _selectedCount;
-            set => this.RaiseAndSetIfChanged(ref _selectedCount, value);
-        }
+        [Reactive] public int SelectedCount { get; set; }
+        [Reactive] public string EditText { get; set; } = "Редактировать 0 клиентов";
+        [Reactive] public string DeleteText { get; set; } = "Удалить 0 клиентов";
+        [Reactive] public string SearchName { get; set; }
+        [Reactive] public bool IsLimited { get; set; }
+        [Reactive] public decimal Limit { get; set; } = 10;
+        [Reactive] public decimal Page { get; set; } = 1;
 
-        private string _editText = "Редактировать 0 клиентов";
-
-        public string EditText
-        {
-            get => _editText;
-            set => this.RaiseAndSetIfChanged(ref _editText, value);
-        }
-
-        private string _deleteText = "Удалить 0 клиентов";
-
-        public string DeleteText
-        {
-            get => _deleteText;
-            set => this.RaiseAndSetIfChanged(ref _deleteText, value);
-        }
 
         public ReactiveCommand AddClientsCommand { get; private set; }
         public ReactiveCommand EditClientsCommand { get; private set; }
         public ReactiveCommand DeleteClientsCommand { get; private set; }
+
+        public ReactiveCommand SelectCommand { get; private set; }
 
         public ReactiveCommand<ListViewItemSelectionChangedEventArgs, Unit> SelectionChangedCommand
         {
@@ -130,6 +99,53 @@ namespace ClientsDbExplorer.ViewModels
                 EditText = $"Редактировать {decl}";
                 DeleteText = $"Удалить {decl}";
             });
+
+            SelectCommand = ReactiveCommand.Create<object>(o =>
+            {
+                IEnumerable<Client> clients;
+                if (IsLimited)
+                {
+                    clients = _db.GetTable<Client>()
+                        .Where(x => x.Name.Contains(SearchName))
+                        .Skip((int) (Limit * (Page - 1)))
+                        .Take((int) Limit)
+                        .OrderBy(x => x.Id);
+                }
+                else
+                {
+                    clients = _db.GetTable<Client>()
+                        .Where(x => x.Name.Contains(SearchName))
+                        .OrderBy(x => x.Id);
+                }
+
+                Clients.Clear();
+                Clients.AddOrUpdate(clients);
+            });
+
+
+            this.WhenAnyValue(x => x.Limit)
+                .Throttle(TimeSpan.FromMilliseconds(250))
+                .DistinctUntilChanged()
+                .Skip(1)
+                .InvokeCommand(SelectCommand);
+
+            this.WhenAnyValue(x => x.Page)
+                .Throttle(TimeSpan.FromMilliseconds(250))
+                .DistinctUntilChanged()
+                .Skip(1)
+                .InvokeCommand(SelectCommand);
+
+            this.WhenAnyValue(x => x.SearchName)
+                .Throttle(TimeSpan.FromMilliseconds(250))
+                .DistinctUntilChanged()
+                .Skip(1)
+                .InvokeCommand(SelectCommand);
+
+            this.WhenAnyValue(x => x.IsLimited)
+                .Throttle(TimeSpan.FromMilliseconds(250))
+                .DistinctUntilChanged()
+                .Skip(1)
+                .InvokeCommand(SelectCommand);
         }
 
         private void AddOrUpdate(Client client)
@@ -143,28 +159,12 @@ namespace ClientsDbExplorer.ViewModels
             }
             else
             {
-                clientDb = new Client { Name = client.Name, Birthday = client.Birthday, Phone = client.Phone};
+                clientDb = new Client {Name = client.Name, Birthday = client.Birthday, Phone = client.Phone};
                 _db.GetTable<Client>().InsertOnSubmit(clientDb);
             }
 
             _db.SubmitChanges();
             Clients.AddOrUpdate(clientDb);
-        }
-
-        private IEnumerable<Client> GetAllClients()
-        {
-            return _db.GetTable<Client>();
-        }
-
-        public Task GetAllClientTask()
-        {
-            //await Task.Delay(1000);
-            foreach (var client in GetAllClients())
-            {
-                Clients.AddOrUpdate(client);
-            }
-
-            return Task.CompletedTask;
         }
     }
 }
