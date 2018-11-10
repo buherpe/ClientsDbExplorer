@@ -137,7 +137,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "AddEditClientView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "FormAddEditClient";
+            this.Text = "Добавление/редактирование клиента";
             this.ResumeLayout(false);
             this.PerformLayout();
 

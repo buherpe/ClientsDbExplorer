@@ -203,7 +203,7 @@
             this.Controls.Add(this.buttonAddClient);
             this.Controls.Add(this.listView1);
             this.Name = "MainView";
-            this.Text = "Form1";
+            this.Text = "ClientsDbExplorer";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLimit)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPage)).EndInit();
             this.ResumeLayout(false);
