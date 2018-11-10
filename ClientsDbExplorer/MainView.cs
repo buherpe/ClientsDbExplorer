@@ -50,7 +50,7 @@ namespace ClientsDbExplorer
             listView1.Events().ItemSelectionChanged.InvokeCommand(VM, vm => vm.SelectionChangedCommand);
 
             listView1.Events().MouseDoubleClick.InvokeCommand(VM, vm => vm.EditClientsCommand);
-
+            
 
             var clientsService = VM.Clients.Connect()
                 //.Sort(SortExpressionComparer<Client>.Descending(t => t.Id),

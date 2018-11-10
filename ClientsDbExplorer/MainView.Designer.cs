@@ -71,17 +71,17 @@
             // 
             // columnHeaderName
             // 
-            this.columnHeaderName.Text = "Name";
+            this.columnHeaderName.Text = "Имя";
             this.columnHeaderName.Width = 200;
             // 
             // columnHeaderBirthday
             // 
-            this.columnHeaderBirthday.Text = "Birthday";
-            this.columnHeaderBirthday.Width = 80;
+            this.columnHeaderBirthday.Text = "День рождения";
+            this.columnHeaderBirthday.Width = 100;
             // 
             // columnHeaderPhone
             // 
-            this.columnHeaderPhone.Text = "Phone";
+            this.columnHeaderPhone.Text = "Телефон";
             this.columnHeaderPhone.Width = 100;
             // 
             // buttonAddClient
