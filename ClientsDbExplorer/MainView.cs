@@ -54,6 +54,8 @@ namespace ClientsDbExplorer
 
 
             var clientsService = VM.Clients.Connect()
+                //.Sort(SortExpressionComparer<Client>.Descending(t => t.Id),
+                //    SortOptimisations.ComparesImmutableValuesOnly, 25)
                 .ObserveOn(listView1)
                 .Bind(out ClientData)
                 .DisposeMany()
@@ -63,6 +65,7 @@ namespace ClientsDbExplorer
 
 
             //VM.GetAllClientTask();
+            
         }
 
         private void AddClient(Client client)

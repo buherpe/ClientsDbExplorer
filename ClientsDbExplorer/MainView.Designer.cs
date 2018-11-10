@@ -173,7 +173,7 @@
             this.numericUpDownPage.TabIndex = 17;
             this.numericUpDownPage.ThousandsSeparator = true;
             this.numericUpDownPage.Value = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
