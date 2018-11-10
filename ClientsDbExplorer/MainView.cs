@@ -32,39 +32,40 @@ namespace ClientsDbExplorer
             InitializeComponent();
             VM = new MainViewModel();
 
-            this.Bind(VM, vm => vm.EditText, v => v.buttonEditClient.Text);
-            this.Bind(VM, vm => vm.DeleteText, v => v.buttonDeleteClient.Text);
-            this.Bind(VM, vm => vm.SearchName, v => v.textBoxSearch.Text);
-            this.Bind(VM, vm => vm.IsLimited, v => v.checkBoxLimit.Checked);
+            this.WhenActivated(d =>
+            {
+                d(this.Bind(VM, vm => vm.EditText, v => v.buttonEditClient.Text));
+                d(this.Bind(VM, vm => vm.DeleteText, v => v.buttonDeleteClient.Text));
+                d(this.Bind(VM, vm => vm.SearchName, v => v.textBoxSearch.Text));
+                d(this.Bind(VM, vm => vm.IsLimited, v => v.checkBoxLimit.Checked));
 
-            this.Bind(VM, vm => vm.Limit, v => v.numericUpDownLimit.Value);
-            this.Bind(VM, vm => vm.Page, v => v.numericUpDownPage.Value);
+                d(this.Bind(VM, vm => vm.Limit, v => v.numericUpDownLimit.Value));
+                d(this.Bind(VM, vm => vm.Page, v => v.numericUpDownPage.Value));
 
-            this.Bind(VM, vm => vm.IsLimited, v => v.numericUpDownLimit.Enabled);
-            this.Bind(VM, vm => vm.IsLimited, v => v.numericUpDownPage.Enabled);
+                d(this.Bind(VM, vm => vm.IsLimited, v => v.numericUpDownLimit.Enabled));
+                d(this.Bind(VM, vm => vm.IsLimited, v => v.numericUpDownPage.Enabled));
 
-            this.BindCommand(VM, vm => vm.AddClientsCommand, v => v.buttonAddClient);
-            this.BindCommand(VM, vm => vm.EditClientsCommand, v => v.buttonEditClient);
-            this.BindCommand(VM, vm => vm.DeleteClientsCommand, v => v.buttonDeleteClient);
+                d(this.BindCommand(VM, vm => vm.AddClientsCommand, v => v.buttonAddClient));
+                d(this.BindCommand(VM, vm => vm.EditClientsCommand, v => v.buttonEditClient));
+                d(this.BindCommand(VM, vm => vm.DeleteClientsCommand, v => v.buttonDeleteClient));
 
-            listView1.Events().ItemSelectionChanged.InvokeCommand(VM, vm => vm.SelectionChangedCommand);
+                d(listView1.Events().ItemSelectionChanged.InvokeCommand(VM, vm => vm.SelectionChangedCommand));
 
-            listView1.Events().MouseDoubleClick.InvokeCommand(VM, vm => vm.EditClientsCommand);
-            
-
-            var clientsService = VM.Clients.Connect()
-                //.Sort(SortExpressionComparer<Client>.Descending(t => t.Id),
-                //    SortOptimisations.ComparesImmutableValuesOnly, 25)
-                .ObserveOn(listView1)
-                .Bind(out ClientData)
-                .DisposeMany()
-                .Subscribe();
-
-            ClientData.ActOnEveryObject(AddClient, DeleteClient);
+                d(listView1.Events().MouseDoubleClick.InvokeCommand(VM, vm => vm.EditClientsCommand));
 
 
-            //VM.GetAllClientTask();
-            
+                var clientsService = VM.Clients.Connect()
+                    //.Sort(SortExpressionComparer<Client>.Descending(t => t.Id),
+                    //    SortOptimisations.ComparesImmutableValuesOnly, 25)
+                    .ObserveOn(listView1)
+                    .Bind(out ClientData)
+                    .DisposeMany()
+                    .Subscribe();
+
+                d(clientsService);
+
+                d(ClientData.ActOnEveryObject(AddClient, DeleteClient));
+            });
         }
 
         private void AddClient(Client client)
@@ -79,14 +80,6 @@ namespace ClientsDbExplorer
         private void DeleteClient(Client client)
         {
             listView1.Items.RemoveByKey($"{client.Id}");
-        }
-
-        private void DeleteClients(IEnumerable<Client> clients)
-        {
-            foreach (var client in clients)
-            {
-                DeleteClient(client);
-            }
         }
 
         public MainViewModel VM { get; set; }
