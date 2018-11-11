@@ -70,7 +70,25 @@ namespace ClientsDbExplorer
 
         private void AddClient(Client client)
         {
-            string[] row = {$"{client.Id}", client.Name, client.Birthday.ToShortDateString(), client.Phone};
+            string phone; 
+            switch (client.Phone.Length)
+            {
+                case 6:
+                    phone = $"{int.Parse(client.Phone):##-##-##}";
+                        break;
+                case 7:
+                    phone = $"{int.Parse(client.Phone):###-##-##}";
+                        break;
+                case 11:
+                    phone = $"{long.Parse(client.Phone):# (###) ###-####}";
+                        break;
+                default:
+                    phone = client.Phone;
+                    break;
+            }
+
+            string[] row =
+                {$"{client.Id}", client.Name, client.Birthday.ToShortDateString(), phone};
             var item = new ListViewItem(row);
             item.Tag = client;
             item.Name = $"{client.Id}";
