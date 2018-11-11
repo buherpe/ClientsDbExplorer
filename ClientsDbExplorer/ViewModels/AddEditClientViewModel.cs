@@ -27,9 +27,9 @@ namespace ClientsDbExplorer.ViewModels
             Birthday = Client.Birthday;
             Phone = Client.Phone;
             
-            var nameSub = this.WhenAnyValue(x => x.Name).Subscribe(c => Client.Name = c);
+            var nameSub = this.WhenAnyValue(x => x.Name).Subscribe(c => Client.Name = c.Trim());
             var bdSub = this.WhenAnyValue(x => x.Birthday).Subscribe(c => Client.Birthday = c);
-            var phoneSub = this.WhenAnyValue(x => x.Phone).Subscribe(c => Client.Phone = c);
+            var phoneSub = this.WhenAnyValue(x => x.Phone).Subscribe(c => Client.Phone = c.Trim());
             
             _cleanup = new CompositeDisposable(nameSub, bdSub, phoneSub);
         }
