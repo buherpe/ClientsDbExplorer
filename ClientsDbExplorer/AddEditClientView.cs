@@ -22,7 +22,7 @@ namespace ClientsDbExplorer
         {
             InitializeComponent();
             VM = new AddEditClientViewModel(client);
-            
+
             this.WhenActivated(d =>
             {
                 d(this.Bind(VM, vm => vm.Name, v => v.textBoxName.Text));

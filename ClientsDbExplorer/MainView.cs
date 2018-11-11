@@ -70,21 +70,21 @@ namespace ClientsDbExplorer
 
         private void AddClient(Client client)
         {
-            string phone; 
+            string phone;
             switch (client.Phone.Length)
             {
                 case 5:
                     phone = $"{int.Parse(client.Phone):#-##-##}";
-                        break;
+                    break;
                 case 6:
                     phone = $"{int.Parse(client.Phone):##-##-##}";
-                        break;
+                    break;
                 case 7:
                     phone = $"{int.Parse(client.Phone):###-##-##}";
-                        break;
+                    break;
                 case 11:
                     phone = $"{long.Parse(client.Phone):# (###) ###-####}";
-                        break;
+                    break;
                 default:
                     phone = client.Phone;
                     break;
