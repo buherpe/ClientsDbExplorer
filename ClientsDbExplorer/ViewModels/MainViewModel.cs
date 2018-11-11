@@ -102,7 +102,7 @@ namespace ClientsDbExplorer.ViewModels
 
             SelectCommand = ReactiveCommand.Create<object>(o =>
             {
-                IEnumerable<Client> clients;
+                IQueryable<Client> clients;
                 clients = _db.GetTable<Client>()
                     .Where(x => x.Name.Contains(SearchName))
                     .OrderBy(x => x.Id);
