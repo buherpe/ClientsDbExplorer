@@ -115,7 +115,10 @@ namespace ClientsDbExplorer.ViewModels
                 }
 
                 Clients.Clear();
-                Clients.AddOrUpdate(clients);
+                foreach (var client in clients)
+                {
+                    Clients.AddOrUpdate(client);
+                }
             });
 
 
