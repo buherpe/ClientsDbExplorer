@@ -129,6 +129,7 @@
             // 
             // checkBoxLimit
             // 
+            this.checkBoxLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.checkBoxLimit.AutoSize = true;
             this.checkBoxLimit.Location = new System.Drawing.Point(12, 390);
             this.checkBoxLimit.Name = "checkBoxLimit";
@@ -139,6 +140,7 @@
             // 
             // numericUpDownLimit
             // 
+            this.numericUpDownLimit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.numericUpDownLimit.Location = new System.Drawing.Point(77, 389);
             this.numericUpDownLimit.Maximum = new decimal(new int[] {
             1000,
@@ -157,6 +159,7 @@
             // 
             // numericUpDownPage
             // 
+            this.numericUpDownPage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.numericUpDownPage.Location = new System.Drawing.Point(199, 389);
             this.numericUpDownPage.Maximum = new decimal(new int[] {
             1000,
@@ -180,6 +183,7 @@
             // 
             // label1
             // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(138, 391);
             this.label1.Name = "label1";
