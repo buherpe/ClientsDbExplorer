@@ -73,6 +73,9 @@ namespace ClientsDbExplorer
             string phone; 
             switch (client.Phone.Length)
             {
+                case 5:
+                    phone = $"{int.Parse(client.Phone):#-##-##}";
+                        break;
                 case 6:
                     phone = $"{int.Parse(client.Phone):##-##-##}";
                         break;

@@ -30,7 +30,7 @@ namespace ClientsDbExplorer.ViewModels
             var nameSub = this.WhenAnyValue(x => x.Name).Subscribe(c => Client.Name = c);
             var bdSub = this.WhenAnyValue(x => x.Birthday).Subscribe(c => Client.Birthday = c);
             var phoneSub = this.WhenAnyValue(x => x.Phone).Subscribe(c => Client.Phone = c);
-
+            
             _cleanup = new CompositeDisposable(nameSub, bdSub, phoneSub);
         }
 
