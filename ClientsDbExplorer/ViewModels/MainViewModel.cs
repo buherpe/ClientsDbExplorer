@@ -38,10 +38,12 @@ namespace ClientsDbExplorer.ViewModels
         [Reactive] public decimal Limit { get; set; } = 10;
         [Reactive] public decimal Page { get; set; } = 1;
 
-        private string _columnIdDefaultText = "Id";
-        private string _columnNameDefaultText = "Имя";
-        private string _columnBirthdayDefaultText = "День рождения";
-        private string _columnPhoneDefaultText = "Телефон";
+        private readonly string _columnArrowUpText = "↑";
+        private readonly string _columnArrowDownText = "↓";
+        private readonly string _columnIdDefaultText = "Id";
+        private readonly string _columnNameDefaultText = "Имя";
+        private readonly string _columnBirthdayDefaultText = "День рождения";
+        private readonly string _columnPhoneDefaultText = "Телефон";
         [Reactive] public string ColumnIdText { get; set; } //= "Id";
         [Reactive] public string ColumnNameText { get; set; } //= "Имя";
         [Reactive] public string ColumnBirthdayText { get; set; } //= "День рождения";
@@ -125,33 +127,28 @@ namespace ClientsDbExplorer.ViewModels
 
                 // lol, unreadable
                 ColumnIdText = SortColumnId == 0
-                    ? (IsSortAscending ? $"{_columnIdDefaultText} ↑" : $"{_columnIdDefaultText} ↓")
+                    ? (IsSortAscending
+                        ? $"{_columnIdDefaultText} {_columnArrowUpText}"
+                        : $"{_columnIdDefaultText} {_columnArrowDownText}")
                     : _columnIdDefaultText;
                 ColumnNameText = SortColumnId == 1
-                    ? (IsSortAscending ? $"{_columnNameDefaultText} ↑" : $"{_columnNameDefaultText} ↓")
+                    ? (IsSortAscending
+                        ? $"{_columnNameDefaultText} {_columnArrowUpText}"
+                        : $"{_columnNameDefaultText} {_columnArrowDownText}")
                     : _columnNameDefaultText;
                 ColumnBirthdayText = SortColumnId == 2
-                    ? (IsSortAscending ? $"{_columnBirthdayDefaultText} ↑" : $"{_columnBirthdayDefaultText} ↓")
+                    ? (IsSortAscending
+                        ? $"{_columnBirthdayDefaultText} {_columnArrowUpText}"
+                        : $"{_columnBirthdayDefaultText} {_columnArrowDownText}")
                     : _columnBirthdayDefaultText;
                 ColumnPhoneText = SortColumnId == 3
-                    ? (IsSortAscending ? $"{_columnPhoneDefaultText} ↑" : $"{_columnPhoneDefaultText} ↓")
+                    ? (IsSortAscending
+                        ? $"{_columnPhoneDefaultText} {_columnArrowUpText}"
+                        : $"{_columnPhoneDefaultText} {_columnArrowDownText}")
                     : _columnPhoneDefaultText;
 
                 Select();
             });
-
-
-            this.WhenAnyValue(x => x.SortColumnId)
-                .Subscribe(x =>
-                {
-                    //_logger.Debug($"{x}");
-                });
-
-            this.WhenAnyValue(x => x.IsSortAscending)
-                .Subscribe(x =>
-                {
-                    
-                });
 
             this.WhenAnyValue(x => x.Limit)
                 //.Throttle(TimeSpan.FromMilliseconds(250))
@@ -176,6 +173,11 @@ namespace ClientsDbExplorer.ViewModels
                 //.DistinctUntilChanged()
                 //.Skip(1)
                 .InvokeCommand(SelectCommand);
+
+            ColumnIdText = $"{_columnIdDefaultText} {_columnArrowUpText}";
+            ColumnNameText = _columnNameDefaultText;
+            ColumnBirthdayText = _columnBirthdayDefaultText;
+            ColumnPhoneText = _columnPhoneDefaultText;
         }
 
         private void Select()
