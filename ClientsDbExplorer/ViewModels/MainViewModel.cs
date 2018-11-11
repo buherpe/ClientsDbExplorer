@@ -33,7 +33,7 @@ namespace ClientsDbExplorer.ViewModels
         [Reactive] public int SelectedCount { get; set; }
         [Reactive] public string EditText { get; set; } = "Редактировать 0 клиентов";
         [Reactive] public string DeleteText { get; set; } = "Удалить 0 клиентов";
-        [Reactive] public string SearchName { get; set; }
+        [Reactive] public string SearchName { get; set; } = "";
         [Reactive] public bool IsLimited { get; set; }
         [Reactive] public decimal Limit { get; set; } = 10;
         [Reactive] public decimal Page { get; set; } = 1;
@@ -123,26 +123,26 @@ namespace ClientsDbExplorer.ViewModels
 
 
             this.WhenAnyValue(x => x.Limit)
-                .Throttle(TimeSpan.FromMilliseconds(250))
-                .DistinctUntilChanged()
+                //.Throttle(TimeSpan.FromMilliseconds(250))
+                //.DistinctUntilChanged()
                 .Skip(1)
                 .InvokeCommand(SelectCommand);
 
             this.WhenAnyValue(x => x.Page)
-                .Throttle(TimeSpan.FromMilliseconds(250))
-                .DistinctUntilChanged()
+                //.Throttle(TimeSpan.FromMilliseconds(250))
+                //.DistinctUntilChanged()
                 .Skip(1)
                 .InvokeCommand(SelectCommand);
 
             this.WhenAnyValue(x => x.SearchName)
-                .Throttle(TimeSpan.FromMilliseconds(250))
+                .Throttle(TimeSpan.FromMilliseconds(150))
                 .DistinctUntilChanged()
                 .Skip(1)
                 .InvokeCommand(SelectCommand);
 
             this.WhenAnyValue(x => x.IsLimited)
-                .Throttle(TimeSpan.FromMilliseconds(250))
-                .DistinctUntilChanged()
+                //.Throttle(TimeSpan.FromMilliseconds(250))
+                //.DistinctUntilChanged()
                 //.Skip(1)
                 .InvokeCommand(SelectCommand);
         }
