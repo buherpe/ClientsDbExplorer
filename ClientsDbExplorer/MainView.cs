@@ -45,14 +45,18 @@ namespace ClientsDbExplorer
                 d(this.Bind(VM, vm => vm.IsLimited, v => v.numericUpDownLimit.Enabled));
                 d(this.Bind(VM, vm => vm.IsLimited, v => v.numericUpDownPage.Enabled));
 
+                d(this.Bind(VM, vm => vm.ColumnIdText, v => v.columnHeaderId.Text));
+                d(this.Bind(VM, vm => vm.ColumnNameText, v => v.columnHeaderName.Text));
+                d(this.Bind(VM, vm => vm.ColumnBirthdayText, v => v.columnHeaderBirthday.Text));
+                d(this.Bind(VM, vm => vm.ColumnPhoneText, v => v.columnHeaderPhone.Text));
+
                 d(this.BindCommand(VM, vm => vm.AddClientsCommand, v => v.buttonAddClient));
                 d(this.BindCommand(VM, vm => vm.EditClientsCommand, v => v.buttonEditClient));
                 d(this.BindCommand(VM, vm => vm.DeleteClientsCommand, v => v.buttonDeleteClient));
 
                 d(listView1.Events().ItemSelectionChanged.InvokeCommand(VM, vm => vm.SelectionChangedCommand));
-
                 d(listView1.Events().MouseDoubleClick.InvokeCommand(VM, vm => vm.EditClientsCommand));
-
+                d(listView1.Events().ColumnClick.InvokeCommand(VM, vm => vm.ColumnClickCommand));
 
                 var clientsService = VM.Clients.Connect()
                     //.Sort(SortExpressionComparer<Client>.Ascending(t => t.Id),

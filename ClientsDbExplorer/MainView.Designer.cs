@@ -77,7 +77,7 @@
             // columnHeaderBirthday
             // 
             this.columnHeaderBirthday.Text = "День рождения";
-            this.columnHeaderBirthday.Width = 100;
+            this.columnHeaderBirthday.Width = 110;
             // 
             // columnHeaderPhone
             // 
