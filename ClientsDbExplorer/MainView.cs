@@ -64,7 +64,7 @@ namespace ClientsDbExplorer
 
                 d(clientsService);
 
-                d(ClientData.ActOnEveryObject(AddClient, DeleteClient));
+                ClientData.ActOnEveryObject(AddClient, DeleteClient);
             });
         }
 
