@@ -14,10 +14,10 @@ namespace ClientsDbExplorer.ViewModels
         private readonly IDisposable _cleanup;
 
         [Reactive] public string Name { get; set; }
-        [Reactive] public DateTime Birthday { get; set; } = DateTime.Now;
+        [Reactive] public DateTime Birthday { get; set; }
         [Reactive] public string Phone { get; set; }
 
-        public Client Client { get; set; }
+        public Client Client { get; }
 
         public AddEditClientViewModel(Client client)
         {

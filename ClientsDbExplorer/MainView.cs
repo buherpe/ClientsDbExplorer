@@ -59,8 +59,6 @@ namespace ClientsDbExplorer
                 d(listView1.Events().ColumnClick.InvokeCommand(VM, vm => vm.ColumnClickCommand));
 
                 var clientsService = VM.Clients.Connect()
-                    //.Sort(SortExpressionComparer<Client>.Ascending(t => t.Id),
-                    //    SortOptimisations.ComparesImmutableValuesOnly, 25)
                     .ObserveOn(listView1)
                     .Bind(out ClientData)
                     .DisposeMany()
@@ -107,7 +105,7 @@ namespace ClientsDbExplorer
             listView1.Items.RemoveByKey($"{client.Id}");
         }
 
-        public MainViewModel VM { get; set; }
+        public MainViewModel VM { get; private set; }
 
         object IViewFor.ViewModel
         {

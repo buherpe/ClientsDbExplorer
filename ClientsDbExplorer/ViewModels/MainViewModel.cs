@@ -52,12 +52,12 @@ namespace ClientsDbExplorer.ViewModels
         [Reactive] public bool IsSortAscending { get; set; } = true;
 
 
-        public ReactiveCommand AddClientsCommand { get; private set; }
-        public ReactiveCommand EditClientsCommand { get; private set; }
-        public ReactiveCommand DeleteClientsCommand { get; private set; }
-        public ReactiveCommand SelectCommand { get; private set; }
-        public ReactiveCommand SelectionChangedCommand { get; private set; }
-        public ReactiveCommand ColumnClickCommand { get; private set; }
+        public ReactiveCommand AddClientsCommand { get; set; }
+        public ReactiveCommand EditClientsCommand { get; set; }
+        public ReactiveCommand DeleteClientsCommand { get; set; }
+        public ReactiveCommand SelectCommand { get; set; }
+        public ReactiveCommand SelectionChangedCommand { get; set; }
+        public ReactiveCommand ColumnClickCommand { get; set; }
 
         public MainViewModel()
         {
